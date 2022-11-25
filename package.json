@@ -1,0 +1,20 @@
+{
+  "name": "gorlbot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "discord-api-types": "^0.37.14",
+    "discord-music-player": "^9.1.1",
+    "discord.js": "^14.5.0",
+    "isomorphic-unfetch": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.23",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
+  },
+  "scripts": {
+    "start": "ts-node src/Bot.ts"
+  }
+}
