@@ -11,7 +11,6 @@ import * as path from 'path';
 const file = readFileSync(path.join(__dirname, "token.txt"), 'utf-8');
 
 const token = file;
-console.log(token)
 
 console.log("Bot is starting...");
 
