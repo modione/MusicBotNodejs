@@ -24,5 +24,4 @@ ready(client)
 interactionCreate(client)
 Queue(client)
 
-// @ts-ignore
 client.login(token)

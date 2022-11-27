@@ -1,4 +1,4 @@
-import {CommandInteraction, Client, Interaction } from "discord.js";
+import {CommandInteraction, Client, Interaction, EmbedBuilder, Colors} from "discord.js";
 import {Commands} from "../Commands";
 
 export default (client: Client): void => {
@@ -22,5 +22,6 @@ const handleSlashCommand = async (client: Client, interaction: CommandInteractio
         slashCommand.run(client, interaction)
     }catch (e) {
         console.error("An Error occured: "+e)
+        await interaction.followUp({embeds: [new EmbedBuilder().setDescription("An error occured!").setColor(Colors.Red)]})
     }
 };
