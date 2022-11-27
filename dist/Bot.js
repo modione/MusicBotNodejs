@@ -11,7 +11,6 @@ const fs_1 = require("fs");
 const path = tslib_1.__importStar(require("path"));
 const file = (0, fs_1.readFileSync)(path.join(__dirname, "token.txt"), 'utf-8');
 const token = file;
-console.log(token);
 console.log("Bot is starting...");
 const client = new discord_js_1.Client({
     intents: ["Guilds", "GuildVoiceStates"],
