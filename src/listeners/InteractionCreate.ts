@@ -18,5 +18,9 @@ const handleSlashCommand = async (client: Client, interaction: CommandInteractio
 
     await interaction.deferReply();
     console.log(`Command "${interaction.commandName}" played on ${interaction!.guild!.name} by ${interaction.user.tag}`)
-    slashCommand.run(client, interaction);
+    try {
+        slashCommand.run(client, interaction)
+    }catch (e) {
+        console.error("An Error occured: "+e)
+    }
 };
