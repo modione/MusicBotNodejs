@@ -13,9 +13,10 @@ export const stop: Command = {
             return
         }
         queue?.clearQueue()
-        queue.play("https://youtu.be/GRa8bSpRePE").then(() => {
+        await queue.play("https://youtu.be/GRa8bSpRePE")
+        setTimeout(() => {
             queue.stop()
             interaction.followUp({embeds: [new EmbedBuilder().setColor("White").setDescription("Der Player wurde gestoppt.")]})
-        })
+        }, 2000)
     }
 }
