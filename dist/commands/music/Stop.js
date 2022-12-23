@@ -13,7 +13,10 @@ exports.stop = {
             await interaction.followUp({ embeds: [new discord_js_1.EmbedBuilder().setColor("Red").setDescription("Es wird gerade kein Song gespielt")] });
             return;
         }
-        queue?.stop();
-        await interaction.followUp({ embeds: [new discord_js_1.EmbedBuilder().setColor("White").setDescription("Der Song wurde gestoppt")] });
+        queue?.clearQueue();
+        queue.play("https://youtu.be/GRa8bSpRePE").then(() => {
+            queue.stop();
+            interaction.followUp({ embeds: [new discord_js_1.EmbedBuilder().setColor("White").setDescription("Der Player wurde gestoppt.")] });
+        });
     }
 };
