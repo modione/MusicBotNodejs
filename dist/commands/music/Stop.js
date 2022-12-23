@@ -13,11 +13,9 @@ exports.stop = {
             await interaction.followUp({ embeds: [new discord_js_1.EmbedBuilder().setColor("Red").setDescription("Es wird gerade kein Song gespielt")] });
             return;
         }
-        queue?.clearQueue();
-        await queue.play("https://youtu.be/GRa8bSpRePE");
-        setTimeout(() => {
-            queue.stop();
-            interaction.followUp({ embeds: [new discord_js_1.EmbedBuilder().setColor("White").setDescription("Der Player wurde gestoppt.")] });
-        }, 2000);
+        await queue?.clearQueue();
+        await queue.play("https://youtu.be/kd-G7H7-k28");
+        await queue.skip();
+        await interaction.followUp({ embeds: [new discord_js_1.EmbedBuilder().setColor("White").setDescription("Der Player wurde gestoppt.")] });
     }
 };
