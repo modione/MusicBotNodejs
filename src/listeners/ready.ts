@@ -11,7 +11,7 @@ export default (client: Client): void => {
 
         console.log(`${client.user.username} is online`);
         client.user.setPresence({
-            activities: [{name: "felix schlagen", type: ActivityType.Playing}],
+            activities: [{name: "Musik", type: ActivityType.Playing}],
             status: 'idle'
         })
     });

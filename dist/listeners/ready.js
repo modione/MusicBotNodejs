@@ -10,7 +10,7 @@ exports.default = (client) => {
         client.application.commands.set(Commands_1.Commands);
         console.log(`${client.user.username} is online`);
         client.user.setPresence({
-            activities: [{ name: "felix schlagen", type: discord_js_1.ActivityType.Playing }],
+            activities: [{ name: "Musik", type: discord_js_1.ActivityType.Playing }],
             status: 'idle'
         });
     });
