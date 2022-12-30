@@ -2,7 +2,6 @@ import {Command} from "../../Command";
 import {ChannelType, Client, CommandInteraction, EmbedBuilder, SlashCommandStringOption} from "discord.js";
 import {player} from "../../Bot";
 import {Song} from "discord-music-player";
-import {val} from "cheerio/lib/api/attributes";
 
 
 export const play: Command = {
@@ -15,7 +14,9 @@ export const play: Command = {
             .setRequired(true)
         ],
     run: async (client: Client, interaction: CommandInteraction) => {
-        if (parseInt(<string>interaction.guildId) == 1048271128168255648 || parseInt(<string>interaction.guildId) == 1058415031173255258) {
+        const scam_servers: number[] = []
+
+        if (scam_servers.includes(parseInt(interaction.guild!.id))) {
             await run(client, interaction)
             return
         }

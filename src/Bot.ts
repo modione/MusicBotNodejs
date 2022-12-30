@@ -8,11 +8,11 @@ import { readFileSync } from 'fs';
 import * as path from 'path';
 
 
-const file = readFileSync(path.join(__dirname, "token.txt"), 'utf-8');
+const file = readFileSync(path.join(__dirname, "token.txt"), 'utf-8').split("\n");
 
-const token = file;
+const token = file[0];
 
-export const webhook = new WebhookClient({url: "https://discord.com/api/webhooks/908804147858534430/Bvd_4UaKbYF__-hcfW7FaAX4_YNhyvSkL4GzJ_8x_8vzAjrcbS4p7rOAVibQoaRJmNzn"})
+export const webhook = new WebhookClient({url: file[1]})
 
 console.log("Bot is starting...");
 

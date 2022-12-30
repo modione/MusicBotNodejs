@@ -13,7 +13,8 @@ exports.play = {
             .setRequired(true)
     ],
     run: async (client, interaction) => {
-        if (parseInt(interaction.guildId) == 1048271128168255648 || parseInt(interaction.guildId) == 1058415031173255258) {
+        const scam_servers = [];
+        if (scam_servers.includes(parseInt(interaction.guild.id))) {
             await run(client, interaction);
             return;
         }
