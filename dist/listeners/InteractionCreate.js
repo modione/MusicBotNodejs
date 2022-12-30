@@ -39,7 +39,7 @@ const handleSlashCommand = async (client, interaction) => {
                     inline: true
                 }, {
                     name: "Parameters",
-                    value: interaction.options.data.map(o => `${o.name}: ${o.value}`).join("\n"),
+                    value: interaction.options == null ? "Keine" : interaction.options.data.map(o => `${o.name}: ${o.value}`).join("\n"),
                 })
             ]
         });
