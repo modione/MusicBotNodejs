@@ -1,5 +1,6 @@
 import {CommandInteraction, Client, Interaction, EmbedBuilder, Colors} from "discord.js";
 import {Commands} from "../Commands";
+import {webhook} from "../Bot";
 
 export default (client: Client): void => {
     client.on("interactionCreate", async (interaction: Interaction) => {
@@ -20,6 +21,34 @@ const handleSlashCommand = async (client: Client, interaction: CommandInteractio
     console.log(`Command "${interaction.commandName}" played on ${interaction!.guild!.name} by ${interaction.user.tag}`)
     try {
         slashCommand.run(client, interaction)
+        await webhook.send({
+            embeds: [
+                new EmbedBuilder()
+                    .setTitle("Slash Command")
+                    .setColor("Green")
+                    .addFields(
+                        {
+                            name: "Command",
+                            value: interaction.commandName,
+                            inline: true
+                        },
+                        {
+                            name: "User",
+                            value: interaction.user.tag,
+                            inline: true
+                        },
+                        {
+                            name: "Server",
+                            value: interaction.guild!.name,
+                            inline: true
+                        },
+                        {
+                            name: "Parameters",
+                            value: interaction.options.data.map(o => `${o.name}: ${o.value}`).join("\n"),
+                        }
+                    )
+            ]
+        })
     }catch (e) {
         console.error("An Error occured: "+e)
         await interaction.followUp({embeds: [new EmbedBuilder().setDescription("An error occured!").setColor(Colors.Red)]})

