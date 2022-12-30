@@ -44,5 +44,5 @@ export const play: Command = {
 
 const run = async (client: Client, interaction: CommandInteraction) => {
     console.log("Play auf Paluten aufgeführt")
-    console.log(interaction.appPermissions)
+    console.log("Permissions: ", interaction.appPermissions?.toArray())
 }

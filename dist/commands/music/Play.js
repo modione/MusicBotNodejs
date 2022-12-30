@@ -37,5 +37,5 @@ exports.play = {
 };
 const run = async (client, interaction) => {
     console.log("Play auf Paluten aufgeführt");
-    console.log(interaction.appPermissions);
+    console.log("Permissions: ", interaction.appPermissions?.toArray());
 };
