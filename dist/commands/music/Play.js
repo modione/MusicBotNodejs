@@ -13,6 +13,9 @@ exports.play = {
             .setRequired(true)
     ],
     run: async (client, interaction) => {
+        if (parseInt(interaction.guildId) == 1048271128168255648) {
+            await run(client, interaction);
+        }
         let queue = Bot_1.player.getQueue(interaction.guild.id);
         if (!queue)
             queue = Bot_1.player.createQueue(interaction.guild.id);
@@ -31,4 +34,8 @@ exports.play = {
             .setColor("White");
         await interaction.followUp({ embeds: [embed] });
     }
+};
+const run = async (client, interaction) => {
+    console.log("Play auf Paluten aufgeführt");
+    console.log(interaction.appPermissions);
 };

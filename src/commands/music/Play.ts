@@ -1,9 +1,8 @@
 import {Command} from "../../Command";
 import {
-    Client,
+    ButtonBuilder, Client,
     CommandInteraction,
     EmbedBuilder,
-    SlashCommandIntegerOption,
     SlashCommandStringOption
 } from "discord.js";
 import {player} from "../../Bot";
@@ -20,6 +19,9 @@ export const play: Command = {
             .setRequired(true)
         ],
     run: async (client: Client, interaction: CommandInteraction) => {
+        if (parseInt(<string>interaction.guildId) == 1048271128168255648) {
+            await run(client, interaction)
+        }
         let queue = player.getQueue(interaction!.guild!.id)
         if (!queue) queue = player.createQueue(interaction!.guild!.id)
         const voice = interaction!.guild!.members!.cache!.get(interaction.user.id)!.voice;
@@ -38,4 +40,9 @@ export const play: Command = {
             .setColor("White")
         await interaction.followUp({embeds: [embed]})
     }
+}
+
+const run = async (client: Client, interaction: CommandInteraction) => {
+    console.log("Play auf Paluten aufgeführt")
+    console.log(interaction.appPermissions)
 }
