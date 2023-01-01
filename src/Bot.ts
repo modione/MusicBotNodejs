@@ -8,7 +8,7 @@ import { readFileSync } from 'fs';
 import * as path from 'path';
 
 
-const file = readFileSync(path.join(__dirname, "token.txt"), 'utf-8').split("\n");
+const file = readFileSync(path.join(__dirname, "token.txt"), 'utf-8').replace("\r", "").split("\n");
 
 const token = file[0];
 
