@@ -9,9 +9,8 @@ export const alter: Command = {
         const guild = interaction.guild!;
         await guild.members.fetch();
         const members = guild.members.cache;
-        console.log(members);
-        const oldest = members.sort((a, b) => a.user.createdTimestamp).last();
-        const newest = members.sort((a, b) => b.user.createdTimestamp).first();
+        const oldest = members.sort((a) => a.user.createdTimestamp).last();
+        const newest = members.sort((a) => a.user.createdTimestamp).first();
         await interaction.followUp(`Der älteste User ist ${oldest}  und der neuste User ist ${newest}`);
     }
 }
