@@ -3,7 +3,6 @@ import {
     Client,
     CommandInteraction,
     EmbedBuilder,
-    SlashCommandIntegerOption,
     SlashCommandStringOption
 } from "discord.js";
 import {player} from "../../Bot";
