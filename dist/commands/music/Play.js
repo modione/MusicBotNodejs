@@ -30,7 +30,7 @@ exports.play = {
         const name = interaction.options.get("name")?.value;
         const song = await queue.play(name).catch(err => {
             console.log(err);
-            interaction.followUp({ embeds: [new discord_js_1.EmbedBuilder().setColor("Red").setDescription("Es ist ein Fehler aufgetreten: " + err.name)] });
+            interaction.followUp({ embeds: [new discord_js_1.EmbedBuilder().setColor("Red").setDescription("Es ist ein Fehler aufgetreten: " + err.toString())] });
             return;
         });
         const embed = new discord_js_1.EmbedBuilder()
