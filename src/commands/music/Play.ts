@@ -30,7 +30,9 @@ export const play: Command = {
         await queue.join(voice.channelId!)
         const name = interaction.options.get("name")?.value
         const song: Song = <Song> await queue.play(<string> name).catch(err => {
-            console.log(err);
+            console.log(err)
+            interaction.followUp({embeds: [new EmbedBuilder().setColor("Red").setDescription("Es ist ein Fehler aufgetreten: "+err.name)]})
+            return
         });
 
         const embed = new EmbedBuilder()

