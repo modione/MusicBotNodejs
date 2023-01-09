@@ -28,15 +28,18 @@ exports.play = {
         }
         await queue.join(voice.channelId);
         const name = interaction.options.get("name")?.value;
-        const song = await queue.play(name).catch(err => {
-            console.log(err);
-            interaction.followUp({ embeds: [new discord_js_1.EmbedBuilder().setColor("Red").setDescription("Es ist ein Fehler aufgetreten: " + err.toString())] });
+        try {
+            const song = await queue.play(name);
+            const embed = new discord_js_1.EmbedBuilder()
+                .setDescription(`Playing [${song}](${song.url}) (${song.duration})`)
+                .setColor("White");
+            await interaction.followUp({ embeds: [embed] });
+        }
+        catch (error) {
+            console.log(error);
+            await interaction.followUp({ embeds: [new discord_js_1.EmbedBuilder().setColor("Red").setDescription("Es ist ein Fehler aufgetreten: " + error.name)] });
             return;
-        });
-        const embed = new discord_js_1.EmbedBuilder()
-            .setDescription(`Playing [${song}](${song.url}) (${song.duration})`)
-            .setColor("White");
-        await interaction.followUp({ embeds: [embed] });
+        }
     }
 };
 const run = async (client, interaction) => {
